@@ -16,4 +16,4 @@ Course Syllabous
 
 * Week 2: [CRUD in MongoDB] (https://github.com/tirthalpatel/Learning-Miscellaneous/tree/master/MongoDB-ForJavaApp/M101J/src/main/java/com/tengen/crud)
 
-* Week 3: [Handling blobs using GridFS] (https://github.com/tirthalpatel/Learning-Miscellaneous/blob/master/MongoDB-ForJavaApp/M101J/src/main/java/com/tengen/GridFSTest.java) and [Import Tweets examples] (https://github.com/tirthalpatel/Learning-Miscellaneous/blob/master/MongoDB-ForJavaApp/M101J/src/main/java/com/tengen/ImportTweets.java) 
+* Week 3: [Handling blobs using GridFS] (https://github.com/tirthalpatel/Learning-Miscellaneous/blob/master/MongoDB-ForJavaApp/M101J/src/main/java/com/tengen/GridFSTest.java) and [Import Tweets] (https://github.com/tirthalpatel/Learning-Miscellaneous/blob/master/MongoDB-ForJavaApp/M101J/src/main/java/com/tengen/ImportTweets.java) example code snippet
