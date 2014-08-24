@@ -4,10 +4,10 @@ MongoDB for Java Developers - M101J Course
 The sample code snippet and homework assignments of M101J course @ https://university.mongodb.com/courses
 
 Skip steps of creating new project, instead use this Maven project directly in Eclipse for quick start 
--------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------
 (1) Download / Clone this project to your local machine.
 
-(2) Just import "HibernateQuickStart" project in Eclipse and switch to Hibernate perspective. Fix build path errors, such as JRE configuration. That's it.
+(2) Just import "M101J" project in Eclipse. Fix build path errors, such as JRE configuration. That's it.
 
 Course Syllabous
 -----------------
