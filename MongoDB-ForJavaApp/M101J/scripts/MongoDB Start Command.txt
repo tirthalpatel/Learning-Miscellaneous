@@ -1,0 +1,36 @@
+Just download MongoDB and unzip it on any drive of machine, for example "D:\Softwares\mongodb-2.6.3\data\db" on Windows
+
+Go to "bin" directory and run below command:
+----------------------------------------------
+
+***************** To start single instance of MongoDB *******************
+
+mongod --dbpath D:\Softwares\mongodb-2.6.3\data\db
+
+
+***************** To build a small replica set (having three nodes of MongoDB) in Windows *****************
+
+(1) Start three mongo instances as follows.
+
+start mongod --replSet m101 --logpath D:\Softwares\mongodb-2.6.3\data\replicaset\rs1.log --dbpath D:\Softwares\mongodb-2.6.3\data\replicaset\rs1 --port 27017 --smallfiles --oplogSize 64
+
+start mongod --replSet m101 --logpath D:\Softwares\mongodb-2.6.3\data\replicaset\rs2.log --dbpath D:\Softwares\mongodb-2.6.3\data\replicaset\rs2 --port 27018 --smallfiles --oplogSize 64
+
+start mongod --replSet m101 --logpath D:\Softwares\mongodb-2.6.3\data\replicaset\rs3.log --dbpath D:\Softwares\mongodb-2.6.3\data\replicaset\rs3 --port 27019 --smallfiles --oplogSize 64
+
+(2) Now connect to a mongo shell and make sure it comes up.
+
+mongo --port 27017
+
+(3) Finally you will create the replica set. Type the following commands into the mongo shell:
+
+config = { _id: "m101", members:[
+          { _id : 0, host : "localhost:27017"},
+          { _id : 1, host : "localhost:27018"},
+          { _id : 2, host : "localhost:27019"} ]
+};
+rs.initiate(config);
+
+(4) At this point, the replica set should be coming up. You can type below command to see the state of replication.
+
+rs.status()
