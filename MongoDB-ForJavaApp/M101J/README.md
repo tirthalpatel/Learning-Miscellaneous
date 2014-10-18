@@ -11,20 +11,20 @@ Setup this Maven project directly in Eclipse for quick start
 (2) Just import "M101J" project in Eclipse. Fix build path errors, such as JRE configuration. That's it.
 
 
-Course Syllabous
------------------
+Course Syllabus
+---------------
 
-* Week 1: [Setup MongoDB and Getting Started with it] (http://docs.mongodb.org/manual/tutorial/getting-started/) and [Hello World Programs] (https://github.com/tirthalpatel/Learning-Miscellaneous/tree/master/MongoDB-ForJavaApp/M101J/src/main/java/com/tengen/helloworld)
+* Week 1: [Setup MongoDB and Getting Started with it] (http://docs.mongodb.org/manual/tutorial/getting-started/) and [Hello World Java Program to connect MongoDB backend] (https://github.com/tirthalpatel/Learning-Miscellaneous/tree/master/MongoDB-ForJavaApp/M101J/src/main/java/com/tengen/helloworld)
 
-* Week 2: [CRUD in MongoDB] (https://github.com/tirthalpatel/Learning-Miscellaneous/tree/master/MongoDB-ForJavaApp/M101J/src/main/java/com/tengen/crud)
+* Week 2: [Java code for performing CRUD operations in MongoDB] (https://github.com/tirthalpatel/Learning-Miscellaneous/tree/master/MongoDB-ForJavaApp/M101J/src/main/java/com/tengen/crud)
 
-* Week 3: [Handling blobs using GridFS] (https://github.com/tirthalpatel/Learning-Miscellaneous/blob/master/MongoDB-ForJavaApp/M101J/src/main/java/com/tengen/GridFSTest.java) and [Import Tweets Example] (https://github.com/tirthalpatel/Learning-Miscellaneous/blob/master/MongoDB-ForJavaApp/M101J/src/main/java/com/tengen/ImportTweets.java) 
+* Week 3: Example java code for [Handling blobs using GridFS in MongoDB] (https://github.com/tirthalpatel/Learning-Miscellaneous/blob/master/MongoDB-ForJavaApp/M101J/src/main/java/com/tengen/GridFSTest.java) and [Import Tweets into MongoDB] (https://github.com/tirthalpatel/Learning-Miscellaneous/blob/master/MongoDB-ForJavaApp/M101J/src/main/java/com/tengen/ImportTweets.java) 
 
-* week 5: [Aggregation Framework] (https://github.com/tirthalpatel/Learning-Miscellaneous/tree/master/MongoDB-ForJavaApp/M101J/scripts/aggregration_framework)
+* week 5: [Sample scripts of MongoDB's Aggregation Framework] (https://github.com/tirthalpatel/Learning-Miscellaneous/tree/master/MongoDB-ForJavaApp/M101J/scripts/aggregration_framework)
 
-* week 6: [Creating Replica Set] (https://github.com/tirthalpatel/Learning-Miscellaneous/tree/master/MongoDB-ForJavaApp/M101J/scripts/creating_a_replica_set), [Connecting to a Replica Set from the Java Driver] (https://github.com/tirthalpatel/Learning-Miscellaneous/tree/master/MongoDB-ForJavaApp/M101J/src/main/java/com/tengen/replication), [Building Sharded Environment] (https://github.com/tirthalpatel/Learning-Miscellaneous/tree/master/MongoDB-ForJavaApp/M101J/scripts/building_a_sharded_environment)
+* week 6: [Script for creating Replica Set in MongoDB] (https://github.com/tirthalpatel/Learning-Miscellaneous/tree/master/MongoDB-ForJavaApp/M101J/scripts/creating_a_replica_set), [Java code for connecting to a Replica Set from the Java Driver] (https://github.com/tirthalpatel/Learning-Miscellaneous/tree/master/MongoDB-ForJavaApp/M101J/src/main/java/com/tengen/replication), [Script for building Sharded Environment in MongoDB] (https://github.com/tirthalpatel/Learning-Miscellaneous/tree/master/MongoDB-ForJavaApp/M101J/scripts/building_a_sharded_environment)
 
-* Final Tutorial of Blogging Application:
+* Final Java code for tutorial of Blogging Application:
 	* How to run it? 
 		- Ensure MongoDB instance "mongodb://localhost" is up and running, as default configuration is in [BlogController.java] (https://github.com/tirthalpatel/Learning-Miscellaneous/blob/master/MongoDB-ForJavaApp/M101J/src/main/java/com/tengen/blog/BlogController.java).
 		- Run BlogController.java [as java application](https://github.com/tirthalpatel/Learning-Miscellaneous/blob/master/MongoDB-ForJavaApp/M101J/src/main/java/com/tengen/blog/BlogController.java) or [using maven command](https://github.com/tirthalpatel/Learning-Miscellaneous/blob/master/MongoDB-ForJavaApp/M101J/scripts/blog_app/run.sh). This would run it on HTTP 8082 port using Spark framework.
