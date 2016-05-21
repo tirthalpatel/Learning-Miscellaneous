@@ -16,9 +16,9 @@
         </dependency>
 
         <dependency>
-            <groupId>spark</groupId>
-            <artifactId>spark</artifactId>
-            <version>0.9.9.4-SNAPSHOT</version>
+            <groupId>com.sparkjava</groupId>
+            <artifactId>spark-core</artifactId>
+            <version>1.0</version>
         </dependency>
 
         <dependency>
