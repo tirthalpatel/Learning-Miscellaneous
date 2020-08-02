@@ -4,11 +4,11 @@ https://www.datastax.com/company/events/cassandra-developer-workshop
 
 Key takeaways from **Two Hours Live-Teaching Every Week** starting from 1st July 2020 for **8 Weeks**. 
 
-## PART 1: How to build Applications with Cassandra
+![Cassandra Workshop Series Agenda](images/Cassandra-Workshop-Series-Agenda.png?raw=true)
 
+## PART 1: [How to build Applications with Cassandra](https://github.com/tirthalpatel/Learning-NoSQL/blob/master/Cassandra-Workshop-Series/PART-1.md)
 
-## PART 2: Test, Deploy and monitor your clusters and applications
-
+## PART 2: [Test, Deploy and monitor your clusters and applications](https://github.com/tirthalpatel/Learning-NoSQL/blob/master/Cassandra-Workshop-Series/PART-2.md)
 
 # References
 
