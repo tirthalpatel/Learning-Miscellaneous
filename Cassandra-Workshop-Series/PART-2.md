@@ -1,4 +1,4 @@
-# PART 2: Test, Deploy and monitor your clusters and applications with Cassandra
+# PART 2: Test, deploy and monitor clusters and applications in Kubernetes and GKE
 
 Theory + Hands-on exercises
 

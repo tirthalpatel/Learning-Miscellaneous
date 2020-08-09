@@ -1,4 +1,4 @@
-# PART 1: How to build Applications with Cassandra
+# PART 1: How to build cloud-native applications with Cassandra
 
 Theory + Hands-on exercises
 
