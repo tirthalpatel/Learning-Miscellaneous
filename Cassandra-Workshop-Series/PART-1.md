@@ -2,7 +2,7 @@
 
 Theory + Hands-on exercises
 
-## Week 1: [Getting Started with Cassandra](https://community.datastax.com/questions/5834/index.html)
+## Week 1: Getting Started with Cassandra - [video](https://www.youtube.com/watch?v=VW8C3nU0EzQ) and [material](https://github.com/DataStax-Academy/cassandra-workshop-series/tree/master/week1%20-%20Getting%20Started%20with%20Cassandra)
 
 * Learn the fundamentals of Apache Cassandra™, its **distributed architecture**, and how data is stored
 * Master Cassandra's internal architecture by studying the **read path**, **write path**, and **compaction**
@@ -34,12 +34,20 @@ Theory + Hands-on exercises
 * **Cloud-native Cassandra-as-a-Service** built on Apache Cassandra™
 * [Do-it-yourself](https://github.com/DataStax-Academy/cassandra-workshop-series/tree/master/week1%20-%20Getting%20Started%20with%20Cassandra)
 
-### [DS201: DataStax Enterprise 6 Foundations of Apache Cassandra™](https://academy.datastax.com/#/online-courses/6167eee3-0575-4d88-9f80-f2270587ce23)
+### Homework: [DS201 - DataStax Enterprise 6 Foundations of Apache Cassandra™](https://academy.datastax.com/#/online-courses/6167eee3-0575-4d88-9f80-f2270587ce23)
 
 * No license is required to use **DataStax Enterprise Edition (DSE)** for development : Must first obtain a license before using DataStax Enterprise edition for production
 
-## Week 2: [Data Modelling for Apache Cassandra™](https://community.datastax.com/questions/6078/index.html)
+## Week 2: Data Modelling for Apache Cassandra™ - [video](https://www.youtube.com/watch?v=V7dnCeJrtD4) and [material](https://github.com/DataStax-Academy/cassandra-workshop-series/tree/master/week2-DataModel)
 
-## Week 3: [Application Development, Backend Services and CRUD](https://community.datastax.com/questions/6377/materials-and-homework-for-week-3.html) 
+### Homework: [DS220 - DataStax Enterprise 6 Practical Application Data Modeling with Apache Cassandra™](https://academy.datastax.com/#/online-courses/ca2e1209-510b-44a6-97de-d5219d835319)
 
-## Week 4: [Application Development, Microservices and REST API](https://community.datastax.com/questions/6738/index.html)
+## Week 3: Application Development, Backend Services and CRUD - [video](https://www.youtube.com/watch?v=QJBep_4Iagw) and [material](https://github.com/DataStax-Academy/cassandra-workshop-series/tree/master/week3-AppDev-crud)
+
+## Week 4: Application Development, Microservices and REST API - [video](https://www.youtube.com/watch?v=jUPKrXO9_NU) and [material](https://github.com/DataStax-Academy/cassandra-workshop-series/tree/master/week4-AppDev-api)
+
+### Homework: [Modern Data Architectures with Kafka and Cassandra](https://www.youtube.com/watch?v=fuT1Ryez_WU)
+
+### Homework: [DataStax Apache Kafka™ Connector](https://academy.datastax.com/#/online-courses/56e13a5d-c753-436c-bc3a-7c18b2ae30bc)
+
+### Homework: [Cassandra 4.0: Better, Faster, Stronger](https://www.datastax.com/accelerate/cassandra-4-0-better-faster-stronger)
