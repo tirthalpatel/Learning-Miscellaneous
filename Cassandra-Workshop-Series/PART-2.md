@@ -1,6 +1,6 @@
 # PART 2: Test, deploy and monitor Cassandra clusters and applications in Kubernetes and GKE
 
-Theory + Hands-on exercises
+Theory + Hands-on exercises -> Key takeaways
 
 ## Week 5: Cassandra in Kubernetes - [video](https://www.youtube.com/watch?v=q2zszeTIDxE) and [material](https://github.com/DataStax-Academy/cassandra-workshop-series/tree/master/week5-Cass-in-k8s)
 
