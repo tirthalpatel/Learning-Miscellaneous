@@ -8,9 +8,9 @@ Key takeaways from **Two Hours Live-Teaching Every Week** starting from 1st July
 
 ## PART 1: How to build cloud-native applications with Cassandra
 
-- [Week 1: Getting Started with Cassandra](https://github.com/tirthalpatel/Learning-NoSQL/blob/master/Cassandra-Workshop-Series/PART-1_Week-1)
-- [Week 2: Data Modeling for Apache Cassandra™](https://github.com/tirthalpatel/Learning-NoSQL/blob/master/Cassandra-Workshop-Series/PART-1_Week-2)
-- [Week 3 and 4: Application development and Building a CRUD REST Microservice](https://github.com/tirthalpatel/Learning-NoSQL/blob/master/Cassandra-Workshop-Series/PART-1_Week-3-4)
+- [Week 1: Getting Started with Cassandra](https://github.com/tirthalpatel/Learning-NoSQL/blob/master/Cassandra-Workshop-Series/PART-1_Week-1.md)
+- [Week 2: Data Modeling for Apache Cassandra™](https://github.com/tirthalpatel/Learning-NoSQL/blob/master/Cassandra-Workshop-Series/PART-1_Week-2.md)
+- [Week 3 and 4: Application development and Building a CRUD REST Microservice](https://github.com/tirthalpatel/Learning-NoSQL/blob/master/Cassandra-Workshop-Series/PART-1_Week-3-4.md)
 
 ## PART 2: [Test, deploy and monitor Cassandra clusters and applications in Kubernetes and GKE](https://github.com/tirthalpatel/Learning-NoSQL/blob/master/Cassandra-Workshop-Series/PART-2.md)
 
