@@ -6,12 +6,13 @@ Key takeaways from **Two Hours Live-Teaching Every Week** starting from 1st July
 
 ![Cassandra Workshop Series Agenda](images/00-Cassandra-Workshop-Series-Agenda.png?raw=true)
 
-## PART 1: [How to build cloud-native applications with Cassandra](https://github.com/tirthalpatel/Learning-NoSQL/blob/master/Cassandra-Workshop-Series/PART-1.md)
+## PART 1: How to build cloud-native applications with Cassandra - [Week 1: Getting Started with Cassandra](https://github.com/tirthalpatel/Learning-NoSQL/blob/master/Cassandra-Workshop-Series/PART-1_Week-1) -> [Week 2: Data Modeling for Apache Cassandra™](https://github.com/tirthalpatel/Learning-NoSQL/blob/master/Cassandra-Workshop-Series/PART-1_Week-2) -> [Week 3 and 4: Application development and Building a CRUD REST Microservice](https://github.com/tirthalpatel/Learning-NoSQL/blob/master/Cassandra-Workshop-Series/PART-1_Week-3-4)
 
 ## PART 2: [Test, deploy and monitor Cassandra clusters and applications in Kubernetes and GKE](https://github.com/tirthalpatel/Learning-NoSQL/blob/master/Cassandra-Workshop-Series/PART-2.md)
 
 # References
 
+* [Cassandra Workshop Series Recorded Videos](https://www.youtube.com/watch?v=y4Gt_LQ8sdA&list=PL2g2h-wyI4SpspPamyuinj9sgxjTFn9ex)
 * [Cassandra Workshop Series Material on Github](https://github.com/DataStax-Academy/cassandra-workshop-series)
 * [Free Self-Paced Courses](https://academy.datastax.com/#/catalog/)
 * [Apache Cassandra Tutorial](https://www.youtube.com/playlist?list=PLalrWAGybpB-L1PGA-NfFu2uiWHEsdscD)
