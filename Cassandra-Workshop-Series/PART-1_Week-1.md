@@ -28,8 +28,8 @@ Theory + Hands-on exercises -> Key takeaways
 * **Scales linearly** (very low to zero overhead on adding new nodes) : Recommended to use all nodes with same level of state and computational power, disk, cpu, etc.
 * Automatic partitioning and replication
 	- Data is Distributed : **Partition** is a first-class feature : Using **Partition Key**
-	- Resilient, fault-tolerent and disaster-tolerent system : **Replication** is a first-class feature : **Replication Factor (RF)** = No of Replica : Recommended RF = 3
-* [The CAP theoram](https://www.youtube.com/watch?v=82wuPR5exmM) : States that in a failure scenario with a distributed system only two of three guarantees are achieved : By default, **Cassandra is AP** (Availability + Partition Tolerance) state : Cassandra **can be configured to CP** (Consistency + Partition Tolerance) using Consistency Level (CL) : Recommended way for Cassandra is **Immediate Consistency** (CL-Read + CL-Write > RF) using Read/Write#Quorum/Quorum
+	- Resilient, fault-tolerent and disaster-tolerent system : **Replication** is a first-class feature : **Replication Factor (RF)** = No of Replica : Recommended RF = 3 : Replication Factor = Configurable per Keyspace per Datacenter
+* [The CAP theoram](https://www.youtube.com/watch?v=82wuPR5exmM) : States that in a failure scenario with a distributed system only two of three guarantees are achieved : By default, **Cassandra is AP** (Availability + Partition Tolerance) state : Cassandra **can be configured to CP** (Consistency + Partition Tolerance) using Consistency Level (CL) - mentions that how many replicas for query to respond OK : Recommended way for Cassandra is **Immediate Consistency** (CL-Read + CL-Write > RF) using Read/Write#Quorum/Quorum : Lower the consistency level (e.g. ONE) = Faster read/write data and much more high availability : Higher the consistency level (e.g. ALL) = Much slower to read/write data, and less availabiliy
 * Cassandra stores part of the data in RAM to speed up reading and writing
 	- **Write path** = When a write query reaches to Cassandra coordinator node, it goes to Memory (sorted by partition key data in **MemTable on RAM** for keeping read-optimized real data) as well as Disk (append only **Commit Log on Disk** for reliability and change data capture), and returns the ACK : When MemTable RAM has enough data, it's flushed to immutable **SSTable (Sorted String Table) on Disk** based on multiple conditions like state of RAM, TTL, Manual flush... : Once data is flushed to SSTable (a log of mutations), the same data is not required in the MemTable and Commit Log : Multiple SSTables (holds ordered partitions) are optimized for disk usage and faster reads by compaction
 	- **Read path** = Reading data from MemTable (by identifying partition) or SSTable (using partition summary on RAM and partition index on Disk) : Key Cache (RAM)
@@ -48,8 +48,26 @@ Theory + Hands-on exercises -> Key takeaways
 
 ![Cloud-native Cassandra-as-a-Service built on Apache Cassandra™](images/01-Astra-Inroduction.png?raw=true)
 
-### Homework: [DS201 - DataStax Enterprise 6 Foundations of Apache Cassandra™](https://academy.datastax.com/#/online-courses/6167eee3-0575-4d88-9f80-f2270587ce23)
+### Homework: [DS101: Introduction to Apache Cassandra™](https://academy.datastax.com/#/online-courses/0da20519-364d-47a9-9916-b59c02175393) & [DS201 - DataStax Enterprise 6 Foundations of Apache Cassandra™](https://academy.datastax.com/#/online-courses/6167eee3-0575-4d88-9f80-f2270587ce23)
 
-* No license is required to use **DataStax Enterprise Edition (DSE)** for development : Must first obtain a license before using DataStax Enterprise edition for production
+* The **Lessons Learned** from the Failures of building Big Data Distributed Systems using RDBMS notions: 
+	- Consistency (in ACID) is not practical due to replication lag in master-slave deployment model, so give it up with notion of **eventual consistency**
+	- Manual **sharding and rebalancing** is hard, so it should be **built-in** as first-class feature
+	- High availability is complicated, and requires additional operational overhead (e.g. for master failover, planned vs. unplanned downtime?), so should be **simplified architecture without master/slave** notion
+	- Scaling up is expensive, so rather prefer **horizontal scaling using commodity hardware**
+	- Third Normal Form (with complex join query and expensive disk seeks) doesn't scale and Scatter/Gather is no good for query big data across multiple nodes, so rather **denormalize** for real time query performance and aim to always hit 1 machine
+* Choosing a Distribution:
+	- **Open Source** : Latest, bleeding edge features : Support and bug fixes using IRC and mailing lists of Community : Perfect for hacking or trying new stuff
+	- **Datastax Enterprise** : Integrated Multi-DC search : Integrated Spark for analysis : Focused on stable releases for enterprise (Extended support, Additional QA)
+	- No license is required to use **DataStax Enterprise Edition (DSE)** for development : Must first obtain a license before using DataStax Enterprise edition for production
+* Cassandra Fundamentals:
+	- The ACID compliance is a feature of RDBMS, but not supported in Cassandra
+	- **Availability and Partition Tolerance** for CAP Theoram
+	- The **Replication Factor** (RF) represents that how many copied of each piece of data should you have in Cassandra cluster : can be set when creating a keyspace
+	- The **Consistency Level** (CL) is set on a **per-query** basis : can be set for both read and write requests : impacts speed of data read and write : impacts high availability goal
+	- **Hinted handoff** is used when a node is down to replay all of writes that occurred
+	- Supports **multiple datacenters** out of the box
+* Cassandra Internals: 
+
 
 ------
