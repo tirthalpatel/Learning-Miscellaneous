@@ -59,6 +59,54 @@ Theory + Hands-on exercises -> Key takeaways
 	- **Avoid hot partitions** : For example, the **PRIMARY KEY ((country), user_id)** shall have less loaded partitions for most European countries, however super overloaded partitions for few Asian contries like China or India : Results to inconsistent performance
 	- **Always specify the partition key in the query!** : If there is no partition key in a query, Cassandra can't understand which node you will ask? : For example, when **PRIMARY KEY ((city), last_name, first_name, email))**, the **SELECT address FROM users_by_city WHERE city = “Otterberg” AND last_name = “Koshkina”** query is correct one over the **SELECT address FROM users_by_city WHERE first_name = “Anna”**
 
-### Homework: [DS220 - DataStax Enterprise 6 Practical Application Data Modeling with Apache Cassandra™](https://academy.datastax.com/#/online-courses/ca2e1209-510b-44a6-97de-d5219d835319)
+#### The Art of Data Modeling
+
+* **Relational Data Modelling**:
+	1. Analyze raw data 
+	2. Identify entities, their properties and relations
+	3. Design tables, using normalization and foreign keys
+	4. Use JOIN when doing queries to join denormalized data from multiple tables
+* **NoSQL Data Modelling**:
+	1. Analyze user behaviour (customer first!)
+	2. Identify workflows, their dependencies and needs
+	3. Define Queries to fulfill these workflows
+	4. Knowing the queries, design tables, using denormalization
+	5. Use BATCH when inserting or updating denormalized data of multiple tables
+* **Cassandra Data Modeling** starts with the queries in mind, and here are the steps to the process:
+	- Enumerate all use-cases and their interdependencies
+	- Use the use cases to identify all queries the app will perform
+	- Use the queries to drive the table definitions
+* If you want your **Cassandra queries** to be fast:
+	- Create tables where the full partition key is how you will query the table
+	- The clustering columns are how you want to order the results : Can perform either equality (=) or range queries (<, >) on clustering columns : Since data is sorted on disk, range searches are a binary search followed by a linear read
+	- Clustering columns default ascending order : Change ordering direction via **WITH CLUSTERING ORDER BY**
+	- Do not require more than one partition key per query
+	- **Allow Filtering** : Relaxes quering on partition key constraint and allow query on just clustering columns : Causes Apache Cassandra to scan all partitions in the table : Don't use it
+* **Cassandra does not do a read before writing** because that would cripple Cassandra's performance:
+	- Instead, Cassandra assumes that if you are inserting a row, the row doesn't exist and Cassandra proceeds to quickly write the row.
+	- Likewise, Cassandra does not read anything before writing an update. So, if the record we are updating does not exist, Cassandra merely creates it.
+	- If you absolutely must perform a read before writing due to a race condition, Cassandra provides lightweight transactions. **Lightweight transactions** force Cassandra to read before writing, but they have serious performance implications and should be **avoided if possible**.
+	
+#### Data Types
+
+* CQL is a typed language and [supports a rich set of data types](https://cassandra.apache.org/doc/latest/cql/types.html), including **native types**, **collection types**, **user-defined types**, **tuple types** and **custom types**
+* **UUID** and **TIMEUUID** - Used in place of integer IDs as Cassandra is a distributed database
+	- UUID : Universal Unique Identifier : Generate via uuid()
+	- TIMEUUID embeds a TIMESTAMP value : Sortable : Generate via now()
+* **Counter**
+	- Use case: Imprecise values such as likes, views, etc.
+	- Cannot be part of a primary key
+	- Counters not mixed with other types in table
+	- Incrementing or decrementing counters is not idempotent
+	- Incrementing or decrementing a counter is not always guaranteed to work - under high traffic situations, it is possible for one of these operations to get dropped
+	- Cassandra counters are always NOT 100% accurate
+* **Collections**
+	- Supports 3 kind of collections: **Maps**, **Sets** and **Lists**
+	- To avoid performance problems, only use collections for small-ish numbers of elements
+	- Sets and maps do not incur the read-before-write penalty, but some list operations do. Therefore, when possible, prefer sets to lists
+	- List prepend and append operations are not idempotent, so retrying after a timeout may result in duplicate elements
+	- Collections may only be used in primary keys if they are frozen
+	
+### Homework: [Learning Series - Cassandra Fundamentals using CQL](https://www.datastax.com/learn/cassandra-fundamentals) & [DS220 - DataStax Enterprise 6 Practical Application Data Modeling with Apache Cassandra™](https://academy.datastax.com/#/online-courses/ca2e1209-510b-44a6-97de-d5219d835319)
 
 ------
