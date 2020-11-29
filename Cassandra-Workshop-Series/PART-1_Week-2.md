@@ -28,7 +28,7 @@ Theory + Hands-on exercises -> Key takeaways
 		  WITH replication = {'class': 'NetworkTopologyStrategy', 'DC1' : 1, 'DC2' : 3}
 		  AND durable_writes = false;
 		```
-* A 'Table' 
+* A **Table** 
 	- A group of columns and rows storing partitions 
 	- **Primary Key** : An unique identifier for a row : all table must define the primary key (and only one) : Must ensure uniqueness + May define sorting : The primary key is composed of two parts namely Partition key and clustering columns
 	- The **Partition Key** : A value of a column(s) to calculate a token : An identifier for a partition (e.g. msgid) : Consists of at least one column, may have more if needed (so-called composite partition) : Partitions rows
@@ -93,20 +93,43 @@ Theory + Hands-on exercises -> Key takeaways
 * **UUID** and **TIMEUUID** - Used in place of integer IDs as Cassandra is a distributed database
 	- UUID : Universal Unique Identifier : Generate via uuid()
 	- TIMEUUID embeds a TIMESTAMP value : Sortable : Generate via now()
-* **Counter**
-	- Use case: Imprecise values such as likes, views, etc.
-	- Cannot be part of a primary key
-	- Counters not mixed with other types in table
-	- Incrementing or decrementing counters is not idempotent
-	- Incrementing or decrementing a counter is not always guaranteed to work - under high traffic situations, it is possible for one of these operations to get dropped
-	- Cassandra counters are always NOT 100% accurate
+* **Blob** - Arbitrary bytes (no validation), expressed as Hexadecimal in Cassandra
+* **Boolean** - Stored internally as true or false
+* **Inet** - IP address string in IPv4 or IPv6 format
+* **Counter** - Imprecise values use case such as likes, views, etc. : Cannot be part of a primary key : Counters not mixed with other types in table : Need specially dedicated table which can have primary key and one or more counter columns : Incrementing or decrementing counters is not idempotent : Must use UPDATE command to update counter columns : Counter columns can not be indexed or deleted : Incrementing or decrementing a counter is not always guaranteed to work, i.e., under high traffic situations, it is possible for one of these operations to get dropped : Cassandra counters are always NOT 100% accurate
 * **Collections**
-	- Supports 3 kind of collections: **Maps**, **Sets** and **Lists**
+	- Supports 3 kind of collections: **Maps** (Typed collectio of key-value pairs; Ordered by unique keys), **Sets** (Typed collection of unique values; Stored unordered, but retrieved in sorted ordered) and **Lists** (Do not need to be unique and can be duplicated; Stored in particular order)
 	- To avoid performance problems, only use collections for small-ish numbers of elements
 	- Sets and maps do not incur the read-before-write penalty, but some list operations do. Therefore, when possible, prefer sets to lists
 	- List prepend and append operations are not idempotent, so retrying after a timeout may result in duplicate elements
-	- Collections may only be used in primary keys if they are frozen
+	- Use **Frozen** keyword in collection to nest datatypes : Using a Frozen will serialize multiple components into single value : Values in Frozen collection are treated like Blobs : Non-frozen types allow updates to individual fields
+	- Collections may only be used in primary keys, if they are frozen
+* **User Defined Types** (UDTs) - Attach multiple data fields to a column : Can be any datatype including collections and other UDTs : Allows embedding more complex data within a single column
 	
-### Homework: [Learning Series - Cassandra Fundamentals using CQL](https://www.datastax.com/learn/cassandra-fundamentals) & [DS220 - DataStax Enterprise 6 Practical Application Data Modeling with Apache Cassandra™](https://academy.datastax.com/#/online-courses/ca2e1209-510b-44a6-97de-d5219d835319)
+### Homework: [DS220 - DataStax Enterprise 6 Practical Application Data Modeling with Apache Cassandra™](https://academy.datastax.com/#/online-courses/ca2e1209-510b-44a6-97de-d5219d835319) & [Hands-on Learning Series - Cassandra Fundamentals using CQL](https://www.datastax.com/learn/cassandra-fundamentals)
 
+* Relational vs. Cassandra
+	![Relational vs. Cassandra Modeling](images/02.01-Relational-vs-Cassandra-DataModeling.png?raw=true)
+* **Cassandra Data Modeling Methodology**
+	![Chebotko Diagram Notions](images/02.02-Chebotko-Diagram-Notions.png?raw=true)
+* **Cassandra Data Modeling Principles** 
+	- `Know your data` : Key constraints affect schema design : Primary key uniquely identifies a row / entity / relationship
+	- `Know your queries` : Queries directly affect schema design : Queries captured by application workflow model : Table schema design changes if queries change : Single Partition Per Query is Ideal (most efficient access pattern, query accesses only one partition to retrieve results, partition can be single-row or multi-row) : Partition+ Per Query is Acceptable (less efficient access pattern but not necessarily bad, query needs to access multiple partitions to retrieve results) : Table Scan / Multi-Table Scan is Anti-Pattern (least efficient type of query but may be needed in some cases, query needs to access all partitions in the table(s) to retrieve results
+	- `Nest data` : Nesting organizes multiple entities into a single partition : Supports partition per query data access : Three data nesting mechanisms are clustering columns (multi-row partitions), collection columns, and user-defined type columns
+	- `Duplicate data` : Better to duplicate than to a join : Data duplication can scale, but joins cannot : Partition per query and data nesting may result in data duplication : Query results are pre-computed and materialized : Data can be duplicated across tables, partitions, and / or rows
+* **Mapping Rules** of Conceptual Data Model and Data Access Patterns to create a Logical Data Table : (1) Entities and Relationships (2) Equality search attributes (3) Inequility search attributes (4) Ordering attributes (5) Key attributes
+* **User Defined Functions** (UDFs) and **User Defined Aggregates** (UDAs)
+	- Creating UDFs : Write custom functions using Java or JavaScript : Use in SELECT, INSERT, and UPDATE statements : Function are only available within the Keyspace where it is defined : Need to enable in cassandra.yml file
+	- Creating UDAs : DataStax Enterprise allows users to define aggregate functions : Functions are applied on data stored in table as part of query result : The aggregate function must be created prior to its use in SELECT statement : Query must only include the aggregate function itself, and no additional columns
+* Quiz
+	- Which command drops all records from an existing table? : `TRUNCATE`
+	- What command executes a file of CQL statements? : `SOURCE`
+	- What command adds/removes columns to/from a table? : `ALTER`
+	- What command bulk load data files? : `COPY`
+	- What is smallest atomic unit of storage in Cassandra? : `Cell`
+	- What is cell? : `Key-Value pair`
+	- What is table's main purpose in Cassandra database? : `Serve a query`
+	- Why do we nest data in Cassandra? : `Support a partition per query access pattern`
+	- What methods are available for loading data into Cassandra? : `COPY command` (import/export CSV), `SSTable loader` (load pre-existing external SSTables into a cluster), `DataStax Enterprise Bulk loader` (used for loading large amounts of data fast using both CSV or JSON format)
+	
 ------
