@@ -32,7 +32,10 @@ Theory + Hands-on exercises -> Key takeaways
 	- A group of columns and rows storing partitions 
 	- **Primary Key** : An unique identifier for a row : all table must define the primary key (and only one) : Must ensure uniqueness + May define sorting : The primary key is composed of two parts namely Partition key and clustering columns
 	- The **Partition Key** : A value of a column(s) to calculate a token : An identifier for a partition (e.g. msgid) : Consists of at least one column, may have more if needed (so-called composite partition) : Partitions rows
-	- The **Clustering Column(s)** : Used to ensure uniqueness and sorting order (e.g. added_date, userid) : Optional
+	- The **Clustering Column(s)** : Used to ensure uniqueness and sorting order (e.g. added_date, userid) : Optional : Rows are always retrieved using the clustering order or its reverse : While the default order for each column is ascendant or ASC, it can be customized on a per column basis using the CLUSTERING ORDER BY clause
+	- A table with **single-row partitions:: is a table where there is exactly one row per partition : Defines a primary key to be equivalent to a partition key
+	- A table with **multi-row partitions** is a table where there can be one or more rows per partition : Defines a primary key to be a combination of both partition and clustering keys : Rows in the same partition have the same partition key values and are ordered based on their clustering key values using the default ascendant order
+	- **Static columns** - Some non-key columns in a table with multi-row partitions can be declared as static columns : Is shared by all rows belonging to the same partition : Can be used to optimize the storage and simplify column updates
 	- How to create table?
 		```
 		CREATE TABLE my_first_ks.my_messages_table (
@@ -102,11 +105,18 @@ Theory + Hands-on exercises -> Key takeaways
 	- To avoid performance problems, only use collections for small-ish numbers of elements
 	- Sets and maps do not incur the read-before-write penalty, but some list operations do. Therefore, when possible, prefer sets to lists
 	- List prepend and append operations are not idempotent, so retrying after a timeout may result in duplicate elements
-	- Use **Frozen** keyword in collection to nest datatypes : Using a Frozen will serialize multiple components into single value : Values in Frozen collection are treated like Blobs : Non-frozen types allow updates to individual fields
+	- Possible to define collection data types that contain nested collections, such as list of maps or set of sets of sets : Use **Frozen** keyword in collection to nest datatypes : **Nested Collection** definition has to be designated as **FROZEN** : Using a Frozen will serialize multiple components into single value : Values in Frozen collection are treated like Blobs : When an individual element of a frozen collection needs to be updated, the entire collection must be overwritten : Nested collections are generally less efficient unless they hold immutable or rarely changing data : Non-frozen types allow updates to individual fields
 	- Collections may only be used in primary keys, if they are frozen
 * **User Defined Types** (UDTs) - Attach multiple data fields to a column : Can be any datatype including collections and other UDTs : Allows embedding more complex data within a single column
+
+#### Advanced Options
+
+* Creating **User Defined Functions** (UDFs) - Write custom functions using Java or JavaScript : Use in SELECT, INSERT, and UPDATE statements : Function are only available within the Keyspace where it is defined : Need to enable in cassandra.yml file 
+* Creating **User Defined Aggregates** (UDAs) - DataStax Enterprise allows users to define aggregate functions : Functions are applied on data stored in table as part of query result : The aggregate function must be created prior to its use in SELECT statement : Query must only include the aggregate function itself, and no additional columns
 	
-### Homework: [DS220 - DataStax Enterprise 6 Practical Application Data Modeling with Apache Cassandra™](https://academy.datastax.com/#/online-courses/ca2e1209-510b-44a6-97de-d5219d835319) & [Hands-on Learning Series - Cassandra Fundamentals using CQL](https://www.datastax.com/learn/cassandra-fundamentals)
+### Homework 
+
+#### [DS220 - DataStax Enterprise 6 Practical Application Data Modeling with Apache Cassandra™](https://academy.datastax.com/#/online-courses/ca2e1209-510b-44a6-97de-d5219d835319)
 
 * Relational vs. Cassandra
 	![Relational vs. Cassandra Modeling](images/02.01-Relational-vs-Cassandra-DataModeling.png?raw=true)
@@ -118,9 +128,14 @@ Theory + Hands-on exercises -> Key takeaways
 	- `Nest data` : Nesting organizes multiple entities into a single partition : Supports partition per query data access : Three data nesting mechanisms are clustering columns (multi-row partitions), collection columns, and user-defined type columns
 	- `Duplicate data` : Better to duplicate than to a join : Data duplication can scale, but joins cannot : Partition per query and data nesting may result in data duplication : Query results are pre-computed and materialized : Data can be duplicated across tables, partitions, and / or rows
 * **Mapping Rules** of Conceptual Data Model and Data Access Patterns to create a Logical Data Table : (1) Entities and Relationships (2) Equality search attributes (3) Inequility search attributes (4) Ordering attributes (5) Key attributes
-* **User Defined Functions** (UDFs) and **User Defined Aggregates** (UDAs)
-	- Creating UDFs : Write custom functions using Java or JavaScript : Use in SELECT, INSERT, and UPDATE statements : Function are only available within the Keyspace where it is defined : Need to enable in cassandra.yml file
-	- Creating UDAs : DataStax Enterprise allows users to define aggregate functions : Functions are applied on data stored in table as part of query result : The aggregate function must be created prior to its use in SELECT statement : Query must only include the aggregate function itself, and no additional columns
+* **Optimization Tuning Phase**
+	- `Analysis and Validation` : Reasons to change data model (requirements change in the domain - the data model is no longer efficient - data is becoming imbalanced - unforeseen load on particular nodes leading to hotspotting) : Important considerations for changing data model or handling new requirements (natural or surrogate keys? write conflicts (overwrites) possible? what data types to use? how large are partitions? how much data duplication is required? are client-side joins required and at what cost? are data consistency anomalies possible? how to enable transactions and data aggregation?)
+	- `Write Techniques:` **Linearizable Consistency** (solution to problems that involve race conditions, e.g. two users trying to register new accounts using the same username, or multiple auction participants placing bids on the same item and potentially overwriting each other's bids) is supported by **Lightweight Transactions** (LWTs) : LWT compare and set operations with ACID properties : Does a read to check a condition, and performs the INSERT / UPDATE / DELETE if the condition is true : Each lightweight transaction is atomic and always works on a single partition : Essentially ACID transaction at partition level : More expensive than regular reads and writes : Use `IF NOT EXISTS` keyword with INSERT : Use `IF` keyword with UPDATE
+	- `Write Techniques:` **Data consistency with Atomic Batches** : Schema data consistency refers to the correctness of data copies : With data duplication, need to handle consistency : All copies of same data in schema should have the same values : Adding, updating and deleting data may require multiple INSERTs, UPDATEs and DELETEs : Logged batches were built for maintaining consistency : Batch is not intended for bulk data loading : No ordering for operations in batch rather all writes are executed with the same timestamp : Single-partition batches can even contain lightweight transactions, but multi-partition batches cannot	
+	- `Read Techniques:` **Secondary Indexes** : Used to query a table using a column that is not normally queryable : Two types of secondary indexes (i) **Regular secondary index (2i)** that uses hash tables to index data and supports equality predicates (ii) **STable-attached secondary index (SASI)**that is an experimental and more efficient secondary index that uses B+ trees to index data and can support equality, inequality and even LIKE text pattern matching : Can be created on any column including collections except counter and static collumns : Indexes on multiple columns are not supported : Secondary index creates additional data structures on nodes holding table partitions : Use when (i) low cardinality columns (ii) prototyping or small datasets (iii) for search on a both a partition key and an indexed column in large partition : Not to use when (i) high cardinality columns (ii) with tables that use a counter column (iii) frequently updated or deleted columns
+	- `Read Techniques:` **Materialized Views** : A read-only table that automatically duplicates, persists and maintains a subset of data from a base table : A database object that stores query results : Builds a table from another table's data which has a new primary key and new properties : The columns of the source table's primary key must be part of the materialized view's primary key : Only one new column can be added to the materialized view's primary key : All view primary key columns must be restricted to not allow nulls : Are suited for high cardinality data : Data can be only written to source tables not materialized views : In terms of performance, even though writes to base tables and views are asynchronous, each materialized view slows down writes to its base table by approximately 10%, so recommended to not create more than two materialized views per table
+	- `Read Techniques:` **Data Aggregation** : Built-in functions provide some summary form of data : DES 6.0 supports CQL aggregates including SUM, AVG, COUNT, MIN, MAX
+	- **How do Data Aggregation for all rows of table** : Possible solutions (i) Update data aggregation on-the-fly in Cassandra using lightweight transactions or counter type (ii) Implement data aggregation on client side (iii) Near real-time batch aggregation using Apache Spark (iv) Stats components using Apache Solr
 * Quiz
 	- Which command drops all records from an existing table? : `TRUNCATE`
 	- What command executes a file of CQL statements? : `SOURCE`
@@ -131,5 +146,24 @@ Theory + Hands-on exercises -> Key takeaways
 	- What is table's main purpose in Cassandra database? : `Serve a query`
 	- Why do we nest data in Cassandra? : `Support a partition per query access pattern`
 	- What methods are available for loading data into Cassandra? : `COPY command` (import/export CSV), `SSTable loader` (load pre-existing external SSTables into a cluster), `DataStax Enterprise Bulk loader` (used for loading large amounts of data fast using both CSV or JSON format)
+	- What Cassandra structure aids with consistency between duplicate data copies? : `Logged Batch`
+	- How do lightweight transaction differ from normal inserts/updates? : They compare (`validate a condition`) before setting (`read before write`)
+	- Which data replication strategy is recommended for production? : `NetworkTopologyStrategy`
+	- A table can have many rows per partition if ... : `It has a primary key consisting of partition and clustering keys`
+	- Clustering order defines how rows are sorted within : `A partition`
+	- Static columns are used to store values that are : `The same for all rows in a partition`
+	- A table with a composite partition key can be queried using ... : `all columns of the partition key`
+	- Inequality predicates are allowed on ... : `clustering key columns`
+	- Row ordering is only possible ... : `within each partition`
+	- In a cluster with two datacenters and replication factors 5 and 3, how many replicas must respond to satisfy CL QUORUM? : `5`
+	- Which of the following consistency levels are guaranteed to provide strong consistency in any cluster? : `QUORUM for writes and QUORUM for reads`
+	- Lightweight transactions ensure ... : `linearizable consistency`
+	- Under what circumstances is the use of lightweight transactions justified? : `race conditions and low data contention`
+	- The main reason to use a batch is ... : `atomicity`
+	- When creating a batch you should ... : `not rely on statement ordering for a correct result`
+	- What is the main real-time transactional use case for a secondary index? : `retrieving rows from a large multi-row partition`
+	- 
 	
+#### [Hands-on Learning Series - Cassandra Fundamentals using CQL](https://www.datastax.com/learn/cassandra-fundamentals)
+
 ------
