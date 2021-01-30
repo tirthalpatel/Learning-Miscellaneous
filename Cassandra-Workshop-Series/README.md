@@ -18,6 +18,7 @@ Key takeaways from **Two Hours Live-Teaching Every Week** starting from 1st July
 
 * [Cassandra Workshop Series Recorded Videos](https://www.youtube.com/watch?v=y4Gt_LQ8sdA&list=PL2g2h-wyI4SpspPamyuinj9sgxjTFn9ex)
 * [Cassandra Workshop Series Material on Github](https://github.com/DataStax-Academy/cassandra-workshop-series)
+* [Datastax for Developers](https://www.datastax.com/dev)
 * [Free Self-Paced Courses](https://academy.datastax.com/#/catalog/)
 * [Apache Cassandra Tutorial](https://www.youtube.com/playlist?list=PLalrWAGybpB-L1PGA-NfFu2uiWHEsdscD)
 * [Learn Apache Cassandra with Hands-on Exercises](https://katacoda.com/datastax)

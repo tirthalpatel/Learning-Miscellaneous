@@ -71,7 +71,7 @@ Theory + Hands-on exercises -> Key takeaways
 	- Supports **multiple datacenters** out of the box
 	- **Partitions** - Group rows physically together on disk based on the partition key
 	- What is the **role of the partitioner**? - It hashes the partition key values to create a partition token
-	- What can a single Cassandra node handle? - Typically, **6,000-12,000 transactions/second/core** and **2-4 Terabytes data on SSD** (do not consider network attached storage / SAN)	
+	- What can a single Cassandra node handle? - Typically, **6,000-12,000 transactions/second/core** and **2-4 Terabytes data on SSD-Solid State Drive** (do not consider NAS-Network Attached Storage / SAN-Storage Area Network)	
 	- Apache Cassandra™ **Token Ring** - A ring keeps track of tokens : Enables Apache Cassandra™ to know exactly which nodes contain which partitions : Eliminates any single points of failure
 	- **New node joining the cluster** - (1) Nodes join the cluster by communicating with any node in the cluster (2) Apache Cassandra finds these seed nodes list of possible nodes in cassandra.yaml (3) Seed nodes communicate cluster topology to the joining node (4) Once the new node joins the cluster, all nodes are peers
 	- Per-query basis, the **drivers** intelligently choose which node would best coordinate a request using one of supported policies like **TokenAwarePolicy** (driver chooses the node which contains data), **RoundRobinPolicy** (driver round robins the ring), **DCAwareRoundRobinPolicy** (driver round robins the target data center)
